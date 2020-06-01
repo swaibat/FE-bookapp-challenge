@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import Img from '../../assets/images/img.png';
 import constants from '../../redux/constants';
-import { createBook } from '../../redux/actions/book.action';
+import { editBook, getBook } from '../../redux/actions/book.action';
 import { connect } from 'react-redux';
 
 class Book extends Component {
+	state = {};
+	componentDidMount() {
+		const token = localStorage.getItem('bookapp_token');
+		const { id } = this.props.match.params;
+		getBook(token, id).then(data => this.setState(data.payload.data));
+	}
 	handleInput = e => {
 		this.setState({
 			[e.target.name]: e.target.value,
@@ -17,9 +24,9 @@ class Book extends Component {
 		const { title, author, isbn } = this.state;
 		const book = { title, author, isbn };
 		const token = localStorage.getItem('bookapp_token');
-		console.log('weeweweewewewwe', token);
+		const { id } = this.props.match.params;
 		this.props.init();
-		this.props.bookCreate(book, token);
+		this.props.bookUpdate(book, token, id);
 	};
 	render() {
 		const { payload } = this.props;
@@ -50,26 +57,27 @@ class Book extends Component {
 					</header>
 
 					<main role='main' className=''>
-						<h4 className='cover-heading mb-2 text-center'>Create Book</h4>
+						<h4 className='cover-heading mb-2 text-center'>Edit Book</h4>
 						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary d-flex align-items-center' style={{ minHeight: '70vh' }}>
 							<form className='col-md-6 mx-auto' onSubmit={this.handleSubmit}>
 								<div className='form-row'>
 									<div className='form-group col-md-12'>
 										<label htmlFor='title'>Book Title</label>
-										<input name='title' type='text' className='form-control' id='title' placeholder='title' onChange={this.handleInput} />
+										<input name='title' type='text' className='form-control' id='title' placeholder='title' onChange={this.handleInput} value={this.state.title} />
 									</div>
 									<div className='form-group col-md-12'>
 										<label htmlFor='author'>Author</label>
-										<input name='author' type='text' className='form-control' id='author' placeholder='author' onChange={this.handleInput} />
+										<input name='author' type='text' className='form-control' id='author' placeholder='author' onChange={this.handleInput} value={this.state.author} />
 									</div>
 									<div className='form-group col-md-12'>
 										<label htmlFor='isbn'>Isbn</label>
-										<input type='text' name='isbn' className='form-control' id='isbn' placeholder='isbn' onChange={this.handleInput} />
+										<input type='text' name='isbn' className='form-control' id='isbn' placeholder='isbn' onChange={this.handleInput} value={this.state.isbn} />
 									</div>
 									<div className='form-group col-md-12'>
 										<label htmlFor='image'>Upload book cover</label>
 										<input type='file' name='image' className='form-control' id='image' placeholder='upload image' onChange={this.handleInput} accept='image/*' />
 									</div>
+									<img width='50' className='img-thumbnail mb-2' src={this.state.image} alt={this.state.title} />
 								</div>
 
 								<button type='submit' className='btn btn-sm btn-primary'>
@@ -100,15 +108,15 @@ const mapDispatchToProps = dispatch => {
 				pending: true,
 			}),
 
-		bookCreate: async (data, token) => dispatch(await createBook(data, token)),
+		bookUpdate: async (data, token) => dispatch(await editBook(data, token)),
 	};
 };
 
 const mapStateToProps = state => {
 	return {
-		payload: state.bookCreate.payload,
-		pending: state.bookCreate.pending,
-		error: state.bookCreate.error,
+		payload: state.bookEdit.payload,
+		pending: state.bookEdit.pending,
+		error: state.bookEdit.error,
 	};
 };
 

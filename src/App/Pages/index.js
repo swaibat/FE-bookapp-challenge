@@ -7,19 +7,23 @@ class Landing extends Component {
 			<>
 				<div id='bg' />
 				<div className='cover-container d-flex w-100 h-100 p-3 mx-auto flex-column'>
-					<header className='masthead mb-auto'>
+					<header className='masthead mb-4'>
 						<div className='inner'>
-							<h3 className='masthead-brand'>Bookapp</h3>
-							<nav className='nav nav-masthead justify-content-center'>
-								<NavLink activeClassName='active' className='nav-link' to='/books'>
-									Books
-								</NavLink>
-								<NavLink activeClassName='active' className='nav-link' to='/register'>
-									Register
-								</NavLink>
-								<NavLink activeClassName='active' className='nav-link' to='/login'>
-									Login
-								</NavLink>
+							<nav className='nav  justify-content-between'>
+								<Link class='navbar-brand' to='/'>
+									BookApp
+								</Link>
+								<span className='d-flex'>
+									<NavLink activeClassName='active' className='nav-link' to='/books'>
+										Books
+									</NavLink>
+									<NavLink activeClassName='active' className='nav-link' to='/register'>
+										Register
+									</NavLink>
+									<NavLink activeClassName='active' className='nav-link' to='/login'>
+										Login
+									</NavLink>
+								</span>
 							</nav>
 						</div>
 					</header>

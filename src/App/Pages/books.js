@@ -17,58 +17,65 @@ class Book extends Component {
 			<>
 				<div id='bg-content' />
 				<div className='cover-container d-flex w-100 h-100 p-3 flex-column mx-auto'>
-					<header className='masthead'>
+					<header className='masthead mb-4'>
 						<div className='inner'>
-							<h3 className='masthead-brand'>Bookapp</h3>
-							<nav className='nav nav-masthead justify-content-center'>
-								<NavLink activeClassName='active' className='nav-link' to='/books'>
-									Books
-								</NavLink>
-								<NavLink activeClassName='active' className='nav-link' to='/register'>
-									Register
-								</NavLink>
-								<NavLink activeClassName='active' className='nav-link' to='/login'>
-									Login
-								</NavLink>
+							<nav className='nav  justify-content-between'>
+								<Link class='navbar-brand' to='/'>
+									BookApp
+								</Link>
+								<span className='d-flex'>
+									<NavLink activeClassName='active' className='nav-link' to='/books'>
+										Books
+									</NavLink>
+									<NavLink activeClassName='active' className='nav-link' to='/register'>
+										Register
+									</NavLink>
+									<NavLink activeClassName='active' className='nav-link' to='/login'>
+										Login
+									</NavLink>
+								</span>
 							</nav>
 						</div>
 					</header>
 
 					<main role='main' className='mt-n3'>
-						<h4 className='cover-heading mb-2'>Books</h4>
-						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary'>
-							<Link to='books/create' className='btn btn-sm btn-success ml-1'>
-								Add Book
-							</Link>
-							{payload && payload.data.length ? (
-								<ul className='list-group list-group-flush text-secondary'>
-									{payload.data.map((book, index) => (
-										<li className='list-group-item'>
-											<span className='media'>
-												<img className='img-thumbnail' height='75' width='100' src={Img} alt='book' />
-												<span className='ml-3 text-left'>
-													<b>title: {book.title}</b>
-													<p className='mb-1'>author: {book.author}</p>
-													<p className='mb-1'>ISBN: {book.isbn}</p>
+						<h4 className='cover-heading mb-2 text-center'>Books</h4>
+						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary' style={{ minHeight: '70vh' }}>
+							<div className='w-100 ml-3'>
+								<Link to='books/create' className='btn btn-sm btn-success ml-1'>
+									Add Book
+								</Link>
+								<hr />
+								{payload && payload.data.length ? (
+									<ul className='list-group list-group-flush text-secondary'>
+										{payload.data.map((book, index) => (
+											<li className='list-group-item px-1'>
+												<span className='media'>
+													<img className='img-thumbnail ml-0' height='75' width='100' src={Img} alt='book' />
+													<span className='ml-3 text-left'>
+														<b>title: {book.title}</b>
+														<p className='mb-1'>author: {book.author}</p>
+														<p className='mb-1'>ISBN: {book.isbn}</p>
+													</span>
+													<span className='ml-auto d-flex flex-column'>
+														<small>3 days ago</small>
+														<div className='btn-group btn-group-sm mt-3'>
+															<Link to={`books/edit/${book.id}`} className='btn btn-primary'>
+																Edit
+															</Link>
+															<button data-toggle='modal' data-target='#exampleModalCenter' className='btn btn-danger'>
+																Delete
+															</button>
+														</div>
+													</span>
 												</span>
-												<span className='ml-auto d-flex flex-column'>
-													<small>3 days ago</small>
-													<div className='btn-group btn-group-sm mt-3'>
-														<Link to={`books/${book.id}`} className='btn btn-primary'>
-															Edit
-														</Link>
-														<Link to={`books/${book.id}`} className='btn btn-danger'>
-															Delete
-														</Link>
-													</div>
-												</span>
-											</span>
-										</li>
-									))}
-								</ul>
-							) : (
-								<h3 className='text-center p-5'>No books Found</h3>
-							)}
+											</li>
+										))}
+									</ul>
+								) : (
+									<h3 className='text-center p-5'>No books Found</h3>
+								)}
+							</div>
 						</div>
 					</main>
 
@@ -79,6 +86,32 @@ class Book extends Component {
 							</p>
 						</div>
 					</footer>
+				</div>
+				<div class='modal fade text-secondary' id='exampleModalCenter' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+					<div class='modal-dialog modal-dialog-centered' role='document'>
+						<div class='modal-content'>
+							<div class='modal-header'>
+								<h5 class='modal-title text-center' id='exampleModalLongTitle'>
+									Delete Book
+								</h5>
+								<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+									<span aria-hidden='true'>&times;</span>
+								</button>
+							</div>
+							<div class='modal-body text-center'>
+								<h6>Are you sure !!!</h6>
+								<p>the book will be permanently deleted</p>
+							</div>
+							<div class='modal-footer'>
+								<button type='button' class='btn btn-secondary' data-dismiss='modal'>
+									Close
+								</button>
+								<button type='button' class='btn btn-sm btn-danger'>
+									delete
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</>
 		);

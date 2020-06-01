@@ -10,6 +10,15 @@ export const getBooks = async () => {
 	}
 };
 
+export const getBook = async (token, id) => {
+	try {
+		const { data } = await Api.getBook(token, id);
+		return { type: constant.BOOK_GET_SUCCESS, payload: data };
+	} catch (error) {
+		return { type: constant.BOOK_GET_ERROR, error: error.response.data };
+	}
+};
+
 export const createBook = async (payload, token) => {
 	try {
 		const { data } = await Api.createBook(payload, token);
