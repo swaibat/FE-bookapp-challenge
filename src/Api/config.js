@@ -1,1 +1,1 @@
-export default 'http://localhost:3000/api/v1';
+export default 'https://relworx-bookapp.herokuapp.com/api/v1';
