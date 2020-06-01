@@ -15,11 +15,11 @@ class Book extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { username, email, password } = this.state;
-		const user = { username, email, password };
+		const { title, author, isbn } = this.state;
+		const book = { title, author, isbn };
 		const token = localStorage.getItem('booksapp');
 		this.props.init();
-		this.props.createBook(user, token);
+		this.props.createBook(book, token);
 	};
 	render() {
 		const { payload } = this.props;
@@ -45,31 +45,27 @@ class Book extends Component {
 						</div>
 					</header>
 
-					<main role='main' className='mt-n3'>
-						<h4 className='cover-heading mb-2'>Books</h4>
+					<main role='main' className=''>
+						<h4 className='cover-heading mb-2'>Create Book</h4>
 						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary'>
-							<form>
+							<form onSubmit={this.handleSubmit}>
 								<div className='form-row'>
-									<div className='form-group col-md-6'>
-										<label htmlFor='inputEmail4'>Email</label>
-										<input type='email' className='form-control' id='inputEmail4' placeholder='Email' />
+									<div className='form-group col-md-12'>
+										<label htmlFor='title'>Book Title</label>
+										<input name='title' type='text' className='form-control' id='title' placeholder='title' onChange={this.handleInput} />
 									</div>
-									<div className='form-group col-md-6'>
-										<label htmlFor='inputPassword4'>Password</label>
-										<input type='password' className='form-control' id='inputPassword4' placeholder='Password' />
+									<div className='form-group col-md-12'>
+										<label htmlFor='author'>Author</label>
+										<input name='author' type='text' className='form-control' id='author' placeholder='author' onChange={this.handleInput} />
 									</div>
-								</div>
-								<div className='form-group'>
-									<label htmlFor='inputAddress'>Address</label>
-									<input type='text' className='form-control' id='inputAddress' placeholder='1234 Main St' />
-								</div>
-								<div className='form-group'>
-									<label htmlFor='inputAddress2'>Address 2</label>
-									<input type='text' className='form-control' id='inputAddress2' placeholder='Apartment, studio, or floor' />
+									<div className='form-group col-md-12'>
+										<label htmlFor='isbn'>Isbn</label>
+										<input type='text' name='isbn' className='form-control' id='isbn' placeholder='isbn' onChange={this.handleInput} />
+									</div>
 								</div>
 
-								<button type='submit' className='btn btn-primary'>
-									Sign in
+								<button type='submit' className='btn btn-sm btn-primary'>
+									Create
 								</button>
 							</form>
 						</div>
@@ -92,19 +88,19 @@ const mapDispatchToProps = dispatch => {
 	return {
 		init: () =>
 			dispatch({
-				type: constants.BOOKS_PENDING,
+				type: constants.BOOK_CREATE_PENDING,
 				pending: true,
 			}),
 
-		books: async data => dispatch(await createBook(data)),
+		bookCreate: async (data, token) => dispatch(await createBook(data, token)),
 	};
 };
 
 const mapStateToProps = state => {
 	return {
-		payload: state.createBook.payload,
-		pending: state.createBook.pending,
-		error: state.createBook.error,
+		payload: state.bookCreate.payload,
+		pending: state.bookCreate.pending,
+		error: state.bookCreate.error,
 	};
 };
 
