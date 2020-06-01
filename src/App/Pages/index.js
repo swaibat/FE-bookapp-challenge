@@ -24,16 +24,18 @@ class Landing extends Component {
 						</div>
 					</header>
 
-					<main role='main' className='inner cover text-center'>
+					<main role='main' className='text-center'>
 						<h1 className='cover-heading'>Book Management App</h1>
 						<p className='lead'>A relworx Challenge Built on top of React as a frontend Stack and nodejs with Sequelize on backend</p>
-						<div className='lead d-flex text-center mx-auto'>
-							<Link to='/register' className='btn  btn-light'>
-								Register
-							</Link>
-							<Link to='/login' className='btn  btn-success ml-3 px-4'>
-								Login
-							</Link>
+						<div className='d-flex justify-content-center mt-3'>
+							<span>
+								<Link to='/register' className='btn  btn-light'>
+									Register
+								</Link>
+								<Link to='/login' className='btn  btn-success ml-3 px-4'>
+									Login
+								</Link>
+							</span>
 						</div>
 					</main>
 

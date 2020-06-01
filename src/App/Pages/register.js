@@ -22,21 +22,21 @@ class Register extends Component {
 		const { payload, error, pending } = this.props;
 		console.log('hello', payload);
 		return (
-			<div class='container h-100 d-flex align-items-center'>
-				<div class='row w-100 my-auto '>
-					<div class='col-md-6 m-auto'>
+			<div className='container h-100 d-flex align-items-center'>
+				<div className='row w-100 my-auto '>
+					<div className='col-md-6 m-auto'>
 						<h3 className='text-dark text-center'>Register</h3>
 						{payload && <span className='alert alert-success text-center my-3 d-block w-100'>{payload.message}</span>}
 						{error && <span className='alert alert-danger text-center my-3 d-block w-100'>{error.message}</span>}
 						<form className='mt-4' onSubmit={this.handleSubmit}>
-							<div class='form-group'>
-								<input type='text' name='username' class='form-control' placeholder='Your Username *' onChange={this.handleInput} required />
+							<div className='form-group'>
+								<input type='text' name='username' className='form-control' placeholder='Your Username *' onChange={this.handleInput} required />
 							</div>
-							<div class='form-group'>
-								<input type='text' name='email' class='form-control' placeholder='Your Email *' onChange={this.handleInput} required />
+							<div className='form-group'>
+								<input type='text' name='email' className='form-control' placeholder='Your Email *' onChange={this.handleInput} required />
 							</div>
-							<div class='form-group'>
-								<input type='password' name='password' class='form-control' placeholder='Your Password *' onChange={this.handleInput} required />
+							<div className='form-group'>
+								<input type='password' name='password' className='form-control' placeholder='Your Password *' onChange={this.handleInput} required />
 							</div>
 							{pending ? (
 								<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit' disabled>

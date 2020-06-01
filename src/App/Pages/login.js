@@ -22,22 +22,22 @@ class Login extends Component {
 		const { payload } = this.props;
 		console.log(payload);
 		return (
-			<div class='container h-100 d-flex align-items-center'>
-				<div class='row w-100'>
-					<div class='col-md-6'>
+			<div className='container h-100 d-flex align-items-center text-secondary'>
+				<div className='row w-100 my-auto '>
+					<div className='col-md-6 m-auto'>
 						<h3>Login</h3>
 						<form onSubmit={this.handleSubmit}>
-							<div class='form-group'>
-								<input type='email' class='form-control' placeholder='Your Email *' onChange={this.handleInput} />
+							<div className='form-group'>
+								<input type='email' className='form-control' placeholder='Your Email *' onChange={this.handleInput} />
 							</div>
-							<div class='form-group'>
-								<input type='password' class='form-control' placeholder='Your Password *' onChange={this.handleInput} />
+							<div className='form-group'>
+								<input type='password' className='form-control' placeholder='Your Password *' onChange={this.handleInput} />
 							</div>
-							<div class='form-group'>
-								<input type='submit' class='btn btn-primary' value='Login' />
+							<div className='form-group'>
+								<input type='submit' className='btn btn-primary' value='Login' />
 							</div>
-							<div class='form-group'>
-								<a href='#' class='text-primary'>
+							<div className='form-group'>
+								<a href='#' className='text-primary'>
 									Forget Password?
 								</a>
 							</div>
