@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { LoginReducer, RegisterReducer } from './auth.reducer';
-import { BooksReducer, bookCreate, bookDelete, bookEdit } from './book.reducer';
+import { BooksReducer, bookCreate, bookDelete, bookEdit, getBook } from './book.reducer';
 
 const allReducers = combineReducers({
 	LoginReducer,
@@ -9,6 +9,7 @@ const allReducers = combineReducers({
 	bookCreate,
 	bookDelete,
 	bookEdit,
+	getBook,
 });
 
 export default allReducers;

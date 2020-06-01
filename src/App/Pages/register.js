@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import constants from '../../redux/constants';
 import { register } from '../../redux/actions/auth.action';
 import { connect } from 'react-redux';
+import { NavLink, Link } from 'react-router-dom';
 
 class Register extends Component {
 	handleInput = e => {
@@ -20,37 +21,71 @@ class Register extends Component {
 	};
 	render() {
 		const { payload, error, pending } = this.props;
-		console.log('hello', payload);
 		return (
-			<div className='container h-100 d-flex align-items-center'>
-				<div className='row w-100 my-auto '>
-					<div className='col-md-6 m-auto'>
-						<h3 className='text-dark text-center'>Register</h3>
-						{payload && <span className='alert alert-success text-center my-3 d-block w-100'>{payload.message}</span>}
-						{error && <span className='alert alert-danger text-center my-3 d-block w-100'>{error.message}</span>}
-						<form className='mt-4' onSubmit={this.handleSubmit}>
-							<div className='form-group'>
-								<input type='text' name='username' className='form-control' placeholder='Your Username *' onChange={this.handleInput} required />
+			<>
+				<div id='bg-content' />
+				<div className='cover-container d-flex w-100 h-100 p-3 flex-column mx-auto'>
+					<header className='masthead mb-4'>
+						<div className='inner'>
+							<nav className='nav  justify-content-between'>
+								<Link class='navbar-brand' to='/'>
+									BookApp
+								</Link>
+								<span className='d-flex'>
+									<NavLink activeClassName='active' className='nav-link' to='/books'>
+										Books
+									</NavLink>
+									<NavLink activeClassName='active' className='nav-link' to='/register'>
+										Register
+									</NavLink>
+									<NavLink activeClassName='active' className='nav-link' to='/login'>
+										Login
+									</NavLink>
+								</span>
+							</nav>
+						</div>
+					</header>
+
+					<main role='main' className=''>
+						<h4 className='cover-heading mb-2 text-center'>Register</h4>
+						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary d-flex align-items-center' style={{ minHeight: '70vh' }}>
+							{/* <div className='row w-100 my-auto '> */}
+							<div className='col-md-6 m-auto'>
+								{payload && <span className='alert alert-success text-center my-3 d-block w-100'>{payload.message}</span>}
+								{error && <span className='alert alert-danger text-center my-3 d-block w-100'>{error.message}</span>}
+								<form className='mt-4' onSubmit={this.handleSubmit}>
+									<div className='form-group'>
+										<input type='text' name='username' className='form-control' placeholder='Your Username *' onChange={this.handleInput} required />
+									</div>
+									<div className='form-group'>
+										<input type='text' name='email' className='form-control' placeholder='Your Email *' onChange={this.handleInput} required />
+									</div>
+									<div className='form-group'>
+										<input type='password' name='password' className='form-control' placeholder='Your Password *' onChange={this.handleInput} required />
+									</div>
+									{pending ? (
+										<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit' disabled>
+											<span className='spinner-border spinner-border-sm mr-2'></span>registering....
+										</button>
+									) : (
+										<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit'>
+											Register
+										</button>
+									)}
+								</form>
 							</div>
-							<div className='form-group'>
-								<input type='text' name='email' className='form-control' placeholder='Your Email *' onChange={this.handleInput} required />
-							</div>
-							<div className='form-group'>
-								<input type='password' name='password' className='form-control' placeholder='Your Password *' onChange={this.handleInput} required />
-							</div>
-							{pending ? (
-								<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit' disabled>
-									<span className='spinner-border spinner-border-sm mr-2'></span>registering....
-								</button>
-							) : (
-								<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit'>
-									Register
-								</button>
-							)}
-						</form>
-					</div>
+						</div>
+					</main>
+
+					<footer className='mastfoot mt-auto'>
+						<div className='inner'>
+							<p>
+								Built with Love by <a href='https://github.com/swaibat'>swaibat</a>.
+							</p>
+						</div>
+					</footer>
 				</div>
-			</div>
+			</>
 		);
 	}
 }

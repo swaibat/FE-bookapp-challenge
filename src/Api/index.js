@@ -11,8 +11,13 @@ const apis = {
 	getBooks() {
 		return axios.get(`${BASE_URL}/books`);
 	},
+	getBook(token, id) {
+		return axios.get(`${BASE_URL}/books/${id}`, {
+			headers: { Authorization: token },
+		});
+	},
 	createBook(data, token) {
-		return axios.get(`${BASE_URL}/books`, data, {
+		return axios.post(`${BASE_URL}/books`, data, {
 			headers: { Authorization: token },
 		});
 	},

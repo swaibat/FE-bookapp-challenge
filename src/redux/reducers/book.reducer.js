@@ -19,6 +19,19 @@ export const BooksReducer = (state = initialState, action) => {
 	}
 };
 
+export const getBook = (state = initialState, action) => {
+	switch (action.type) {
+		case constant.BOOK_GET_PENDING:
+			return { ...state, pending: true };
+		case constant.BOOK_GET_SUCCESS:
+			return { ...state, payload: action.payload, pending: false };
+		case constant.BOOK_GET_ERROR:
+			return { ...state, error: action.error, pending: false };
+		default:
+			return state;
+	}
+};
+
 export const bookCreate = (state = initialState, action) => {
 	switch (action.type) {
 		case constant.BOOK_CREATE_PENDING:
