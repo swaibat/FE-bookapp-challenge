@@ -26,7 +26,7 @@ const apis = {
 			headers: { Authorization: token },
 		});
 	},
-	deleteBook(data, token, id) {
+	deleteBook(token, id) {
 		return axios.delete(`${BASE_URL}/books/${id}`, {
 			headers: { Authorization: token },
 		});
