@@ -1,58 +1,50 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
 import constants from '../../redux/constants';
 import { createBook } from '../../redux/actions/book.action';
 import { connect } from 'react-redux';
+import { token } from '../../helper';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
+import { Redirect } from 'react-router-dom';
 
 class Book extends Component {
+	state = {};
 	handleInput = e => {
 		this.setState({
 			[e.target.name]: e.target.value,
 			loading: true,
 		});
+		if (e.target.name === 'image') {
+			this.setState({ image: e.target.files[0] });
+		}
 	};
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { title, author, isbn } = this.state;
-		const book = { title, author, isbn };
-		const token = localStorage.getItem('bookapp_token');
-		console.log('weeweweewewewwe', token);
+		const form = new FormData();
+		for (const key in this.state) {
+			if (this.state.hasOwnProperty(key)) {
+				form.append(key, this.state[key]);
+			}
+		}
 		this.props.init();
-		this.props.bookCreate(book, token);
+		this.props.bookCreate(form, token);
 	};
 	render() {
-		const { payload } = this.props;
-		console.log(payload);
+		console.log(this.state);
+		const { payload, error, pending } = this.props;
 		return (
 			<>
+				{!token && <Redirect to='/login' />}
+				{payload && <Redirect to='/books' />}
 				<div id='bg-content' />
 				<div className='cover-container d-flex w-100 h-100 p-3 flex-column mx-auto'>
-					<header className='masthead mb-4'>
-						<div className='inner'>
-							<nav className='nav  justify-content-between'>
-								<Link class='navbar-brand' to='/'>
-									BookApp
-								</Link>
-								<span className='d-flex'>
-									<NavLink activeClassName='active' className='nav-link' to='/books'>
-										Books
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/register'>
-										Register
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/login'>
-										Login
-									</NavLink>
-								</span>
-							</nav>
-						</div>
-					</header>
-
+					<Header />
 					<main role='main' className=''>
 						<h4 className='cover-heading mb-2 text-center'>Create Book</h4>
 						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary d-flex align-items-center' style={{ minHeight: '70vh' }}>
 							<form className='col-md-6 mx-auto' onSubmit={this.handleSubmit}>
+								{error && <span className='alert alert-danger text-center my-3 d-block w-100'>{error.message}</span>}
 								<div className='form-row'>
 									<div className='form-group col-md-12'>
 										<label htmlFor='title'>Book Title</label>
@@ -72,20 +64,19 @@ class Book extends Component {
 									</div>
 								</div>
 
-								<button type='submit' className='btn btn-sm btn-primary'>
-									Create
-								</button>
+								{pending ? (
+									<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit' disabled>
+										<span className='spinner-border spinner-border-sm mr-2'></span>creating....
+									</button>
+								) : (
+									<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit'>
+										Create
+									</button>
+								)}
 							</form>
 						</div>
 					</main>
-
-					<footer className='mastfoot mt-auto'>
-						<div className='inner'>
-							<p>
-								Built with Love by <a href='https://github.com/swaibat'>swaibat</a>.
-							</p>
-						</div>
-					</footer>
+					<Footer />
 				</div>
 			</>
 		);

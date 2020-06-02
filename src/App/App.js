@@ -6,34 +6,33 @@ import Register from './Pages/register';
 import Books from './Pages/books';
 import CreateBook from './Pages/book.create';
 import EditBook from './Pages/book.update';
-// import Header from './Components/Header';
-// import Footer from './Components/Footer';
 
 export class App extends React.Component {
 	render() {
+		console.log(this.props);
 		return (
-			<Router>
-				{/* <Header /> */}
-				<Switch>
-					<Route exact path='/' component={Landing} />
-				</Switch>
-				<Switch>
-					<Route exact path='/login' component={Login} />
-				</Switch>
-				<Switch>
-					<Route exact path='/register' component={Register} />
-				</Switch>
-				<Switch>
-					<Route exact path='/books' component={Books} />
-				</Switch>
-				<Switch>
-					<Route exact path='/books/create' component={CreateBook} />
-				</Switch>
-				<Switch>
-					<Route exact path='/books/edit/:id' component={EditBook} />
-				</Switch>
-				{/* <Footer /> */}
-			</Router>
+			<>
+				<Router>
+					<Switch>
+						<Route exact path='/' component={Landing} />
+					</Switch>
+					<Switch>
+						<Route exact path='/login' component={Login} />
+					</Switch>
+					<Switch>
+						<Route exact path='/register' component={Register} />
+					</Switch>
+					<Switch>
+						<Route exact path='/books' component={Books} />
+					</Switch>
+					<Switch>
+						<Route exact path='/books/create' component={CreateBook} />
+					</Switch>
+					<Switch>
+						<Route exact path='/books/edit/:id' component={EditBook} />
+					</Switch>
+				</Router>
+			</>
 		);
 	}
 }

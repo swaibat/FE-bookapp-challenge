@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import Img from '../../assets/images/img.png';
 import constants from '../../redux/constants';
 import { editBook, getBook } from '../../redux/actions/book.action';
 import { connect } from 'react-redux';
+import { token } from '../../helper';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
+import { Redirect } from 'react-router-dom';
 
 class Book extends Component {
 	state = {};
 	componentDidMount() {
-		const token = localStorage.getItem('bookapp_token');
 		const { id } = this.props.match.params;
 		getBook(token, id).then(data => this.setState(data.payload.data));
 	}
@@ -17,49 +18,38 @@ class Book extends Component {
 			[e.target.name]: e.target.value,
 			loading: true,
 		});
+		if (e.target.name === 'image') {
+			this.setState({ image: e.target.files[0] });
+		}
 	};
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { title, author, isbn } = this.state;
-		const book = { title, author, isbn };
-		const token = localStorage.getItem('bookapp_token');
 		const { id } = this.props.match.params;
 		this.props.init();
-		this.props.bookUpdate(book, token, id);
+		const form = new FormData();
+		for (const key in this.state) {
+			if (this.state.hasOwnProperty(key)) {
+				form.append(key, this.state[key]);
+			}
+		}
+		this.props.init();
+		this.props.bookCreate(form, token, id);
 	};
 	render() {
-		const { payload } = this.props;
-		console.log(payload);
+		const { payload, error, pending } = this.props;
 		return (
 			<>
+				{!token && <Redirect to='/login' />}
+				{payload && <Redirect to='/books' />}
 				<div id='bg-content' />
 				<div className='cover-container d-flex w-100 h-100 p-3 flex-column mx-auto'>
-					<header className='masthead mb-4'>
-						<div className='inner'>
-							<nav className='nav  justify-content-between'>
-								<Link class='navbar-brand' to='/'>
-									BookApp
-								</Link>
-								<span className='d-flex'>
-									<NavLink activeClassName='active' className='nav-link' to='/books'>
-										Books
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/register'>
-										Register
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/login'>
-										Login
-									</NavLink>
-								</span>
-							</nav>
-						</div>
-					</header>
-
+					<Header />
 					<main role='main' className=''>
 						<h4 className='cover-heading mb-2 text-center'>Edit Book</h4>
 						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary d-flex align-items-center' style={{ minHeight: '70vh' }}>
 							<form className='col-md-6 mx-auto' onSubmit={this.handleSubmit}>
+								{error && <span className='alert alert-danger text-center my-3 d-block w-100'>{error.message}</span>}
 								<div className='form-row'>
 									<div className='form-group col-md-12'>
 										<label htmlFor='title'>Book Title</label>
@@ -80,20 +70,19 @@ class Book extends Component {
 									<img width='50' className='img-thumbnail mb-2' src={this.state.image} alt={this.state.title} />
 								</div>
 
-								<button type='submit' className='btn btn-sm btn-primary'>
-									Create
-								</button>
+								{pending ? (
+									<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit' disabled>
+										<span className='spinner-border spinner-border-sm mr-2'></span>updating....
+									</button>
+								) : (
+									<button className='btn font-weight-light rounded-sm btn-primary btn-block' type='submit'>
+										Update
+									</button>
+								)}
 							</form>
 						</div>
 					</main>
-
-					<footer className='mastfoot mt-auto'>
-						<div className='inner'>
-							<p>
-								Built with Love by <a href='https://github.com/swaibat'>swaibat</a>.
-							</p>
-						</div>
-					</footer>
+					<Footer />
 				</div>
 			</>
 		);

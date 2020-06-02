@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { token, tokenData } from '../../helper';
 
 class Landing extends Component {
 	render() {
@@ -7,7 +8,7 @@ class Landing extends Component {
 			<>
 				<div id='bg' />
 				<div className='cover-container d-flex w-100 h-100 p-3 mx-auto flex-column'>
-					<header className='masthead mb-4'>
+					<header className='masthead mb-auto'>
 						<div className='inner'>
 							<nav className='nav  justify-content-between'>
 								<Link class='navbar-brand' to='/'>
@@ -17,29 +18,47 @@ class Landing extends Component {
 									<NavLink activeClassName='active' className='nav-link' to='/books'>
 										Books
 									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/register'>
-										Register
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/login'>
-										Login
-									</NavLink>
+									{token ? (
+										<NavLink activeClassName='active' className='nav-link' to='#'>
+											Hi {tokenData().username} !
+										</NavLink>
+									) : (
+										<>
+											<NavLink activeClassName='active' className='nav-link' to='/register'>
+												Register
+											</NavLink>
+											<NavLink activeClassName='active' className='nav-link' to='/login'>
+												Login
+											</NavLink>
+										</>
+									)}
 								</span>
 							</nav>
 						</div>
 					</header>
-
 					<main role='main' className='text-center'>
 						<h1 className='cover-heading'>Book Management App</h1>
 						<p className='lead'>A relworx Challenge Built on top of React as a frontend Stack and nodejs with Sequelize on backend</p>
 						<div className='d-flex justify-content-center mt-3'>
-							<span>
-								<Link to='/register' className='btn  btn-light'>
-									Register
-								</Link>
-								<Link to='/login' className='btn  btn-success ml-3 px-4'>
-									Login
-								</Link>
-							</span>
+							{token ? (
+								<span>
+									<Link to='/books' className='btn  btn-light'>
+										Explore Books
+									</Link>
+									<Link to='/books/create' className='btn  btn-success ml-3 px-4'>
+										Add A Book
+									</Link>
+								</span>
+							) : (
+								<span>
+									<Link to='/register' className='btn  btn-light'>
+										Register
+									</Link>
+									<Link to='/login' className='btn  btn-success ml-3 px-4'>
+										Login
+									</Link>
+								</span>
+							)}
 						</div>
 					</main>
 
