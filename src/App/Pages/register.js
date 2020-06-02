@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import constants from '../../redux/constants';
 import { register } from '../../redux/actions/auth.action';
 import { connect } from 'react-redux';
-import { NavLink, Link } from 'react-router-dom';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 class Register extends Component {
 	handleInput = e => {
@@ -25,27 +26,7 @@ class Register extends Component {
 			<>
 				<div id='bg-content' />
 				<div className='cover-container d-flex w-100 h-100 p-3 flex-column mx-auto'>
-					<header className='masthead mb-4'>
-						<div className='inner'>
-							<nav className='nav  justify-content-between'>
-								<Link class='navbar-brand' to='/'>
-									BookApp
-								</Link>
-								<span className='d-flex'>
-									<NavLink activeClassName='active' className='nav-link' to='/books'>
-										Books
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/register'>
-										Register
-									</NavLink>
-									<NavLink activeClassName='active' className='nav-link' to='/login'>
-										Login
-									</NavLink>
-								</span>
-							</nav>
-						</div>
-					</header>
-
+					<Header />
 					<main role='main' className=''>
 						<h4 className='cover-heading mb-2 text-center'>Register</h4>
 						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary d-flex align-items-center' style={{ minHeight: '70vh' }}>
@@ -76,14 +57,7 @@ class Register extends Component {
 							</div>
 						</div>
 					</main>
-
-					<footer className='mastfoot mt-auto'>
-						<div className='inner'>
-							<p>
-								Built with Love by <a href='https://github.com/swaibat'>swaibat</a>.
-							</p>
-						</div>
-					</footer>
+					<Footer />
 				</div>
 			</>
 		);
