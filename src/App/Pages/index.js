@@ -19,9 +19,21 @@ class Landing extends Component {
 										Books
 									</NavLink>
 									{token ? (
-										<NavLink activeClassName='active' className='nav-link' to='#'>
-											Hi {tokenData().username} !
-										</NavLink>
+										<>
+											<Link className='nav-link' to='#'>
+												Hi {tokenData().username} !
+											</Link>
+											<Link
+												onClick={() => {
+													localStorage.removeItem('bookapp_token');
+													return window.location.replace('/');
+												}}
+												className='nav-link'
+												to='#'
+											>
+												Logout
+											</Link>
+										</>
 									) : (
 										<>
 											<NavLink activeClassName='active' className='nav-link' to='/register'>
