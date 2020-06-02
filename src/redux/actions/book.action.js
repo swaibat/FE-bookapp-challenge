@@ -37,9 +37,9 @@ export const editBook = async (payload, token, id) => {
 	}
 };
 
-export const deleteBook = async (payload, token, id) => {
+export const deleteBook = async (token, id) => {
 	try {
-		const { data } = await Api.deleteBook(payload, token, id);
+		const { data } = await Api.deleteBook(token, id);
 		return { type: constant.BOOK_DELETE_SUCCESS, payload: data };
 	} catch (error) {
 		return { type: constant.BOOK_DELETE_ERROR, error: error.response.data };
