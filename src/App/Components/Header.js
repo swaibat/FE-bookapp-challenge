@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { token, tokenData } from '../../helper';
+import { Redirect } from 'react-router-dom';
 
 class Header extends Component {
 	render() {
@@ -17,9 +18,21 @@ class Header extends Component {
 									Books
 								</NavLink>
 								{token ? (
-									<NavLink activeClassName='active' className='nav-link' to='#'>
-										Hi {tokenData().username} !
-									</NavLink>
+									<>
+										<Link className='nav-link' to='#'>
+											Hi {tokenData().username} !
+										</Link>
+										<Link
+											onClick={() => {
+												localStorage.removeItem('bookapp_token');
+												return window.location.replace('/');
+											}}
+											className='nav-link'
+											to='#'
+										>
+											Logout
+										</Link>
+									</>
 								) : (
 									<>
 										<NavLink activeClassName='active' className='nav-link' to='/register'>

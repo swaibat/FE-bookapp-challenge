@@ -4,14 +4,26 @@ import { login } from '../../redux/actions/auth.action';
 import { connect } from 'react-redux';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { token } from '../../helper';
 
 class Login extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+		this.handleInput = this.handleInput.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 	handleInput = e => {
 		this.setState({
 			[e.target.type]: e.target.value,
 			loading: true,
 		});
+	};
+
+	redirectToHome = () => {
+		const { history } = this.props;
+		if (history) history.push('/books');
 	};
 
 	handleSubmit = e => {
@@ -25,7 +37,8 @@ class Login extends Component {
 		const { payload, error, pending } = this.props;
 		return (
 			<>
-				{payload && <Redirect to='/books' />}
+				{payload && window.location.replace('/books')}
+				{token && <Redirect to='/' />}
 				<div id='bg-content' />
 				<div className='cover-container d-flex w-100 h-100 p-3 flex-column mx-auto'>
 					<Header />
@@ -33,6 +46,9 @@ class Login extends Component {
 						<h4 className='cover-heading mb-2 text-center'>Login</h4>
 						<div className='w-100 bg-white p-4 rounded shadow-sm text-secondary d-flex align-items-center' style={{ minHeight: '70vh' }}>
 							<div className='col-md-6 m-auto'>
+								<p className='alert alert-success w-100 text-center'>
+									Demo-Login <b>email</b>: doe@gmail.com <b>password</b>: password
+								</p>
 								{error && <span className='alert alert-danger text-center my-3 d-block w-100'>{error.message}</span>}
 								<form onSubmit={this.handleSubmit}>
 									<div className='form-group'>
@@ -81,4 +97,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
